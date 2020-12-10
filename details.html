@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="css/mui.css" rel="stylesheet" />
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/details.css">
+</head>
+<body>
+	
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">垃圾分类</h1>
+	</header>
+
+	<section>
+		<h1>匹配结果</h1>
+		<div class='detail-title' id='detailTitle'></div>
+		<div class='detail-list'>
+			<p>您可能要找到的是</p>
+			<ul class="mui-table-view" id='detailList'></ul>
+		</div>
+	</section>
+
+	<script src="./js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/flexible.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+	mui.init();
+	mui.plusReady(function(){
+		
+		// 接收传过来的值
+		var params = plus.webview.currentWebview();
+		var title = decodeURI(params.title);
+		console.log(title)
+		mui.ajax('http://apis.juhe.cn/rubbish/search',{
+			data:{
+				key:'dfe7a5dc90a9be32d35d15d5a06eb619',
+				q:title
+			},
+			success:function(data){
+				console.log(JSON.stringify(data))
+				var result = data.result;
+				//如果没有搜索到数据
+				if( !result ){
+					mui('#detailTitle')[0].innerHTML = `
+						<p>小编正在查阅资料，请稍后查看</p>
+						<h3>未知垃圾</h3>`;
+					return false;
+				}
+				//如果搜索到数据
+				mui.each(result,function(index,item){
+					//如果数据和语音输入的内容相同
+					if( item.itemName == title ){
+						mui('#detailTitle')[0].innerHTML = `
+							<p>${item.itemName}为</p>
+							<h3>${item.itemCategory}</h3>`;
+					}else{
+						mui('#detailList')[0].innerHTML += `
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									<p>${item.itemName}</p>
+									<p>${item.itemCategory}</p>
+								</a>
+							</li>`;
+					}
+				})
+			}
+		})
+	})
+</script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+.mui-bar{
+	background-color: #F2F2F0!important;
+}
+.mui-title{
+	text-align: left!important;
+}
+a,a:active {
+    color: #000!important;
+}
+p{
+	color: #fff!important;
+}
+.g-container{
+	display: flex;
+	flex-direction: column;
+	width: 100vw;
+	height: 100vh;
+}
+header{
+	width: 100%;
+	height: 1.173333rem;
+}
+section{
+	display: flex;
+	flex-direction: column;
+	flex:1;
+	padding-top:1.173333rem;
+}
+.mui-slider-item{
+	padding:0.533333rem;
+}
+.mui-slider-item > div{
+	padding:0.533333rem;
+	color:#fff;
+	background-color: #AC5740;
+	border-radius:12px;
+}
+.scroll-list{
+	position: relative;
+	flex:1;
+}
+.scroll-list ul li{
+	padding:0.4rem 0.533333rem;
+	font-size:0.426666rem;
+}
